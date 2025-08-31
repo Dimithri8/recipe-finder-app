@@ -1,8 +1,11 @@
+import { Routes, Route } from "react-router-dom";
+import RecipeList from "./pages/RecipeList/RecipeList";
+
 function App() {
   return (
-    <>
-      <h1>Hi</h1>
-    </>
+    <Routes>
+      <Route path="/" element={<RecipeList />} />
+    </Routes>
   );
 }
 
