@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 
-export default function SearchBar({ handleSubmit, handleChange }) {
+export default function SearchBar({ handleSubmit, handleChange, searchTerm }) {
   return (
     <Box>
       {" "}
@@ -10,6 +10,7 @@ export default function SearchBar({ handleSubmit, handleChange }) {
           type="text"
           placeholder="Search recipe"
           name="search"
+          value={searchTerm}
           onChange={handleChange}
         />
 
