@@ -1,8 +1,7 @@
-import { useState } from "react";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+import { useEffect, useState } from "react";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { Box } from "@mui/material";
+import RecipeCard from "../../components/RecipeCard/RecipeCard";
 
 export default function RecipeList() {
   const [input, setInput] = useState("");
@@ -20,29 +19,44 @@ export default function RecipeList() {
         `https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`
       );
       const data = await response.json();
-      console.log(data);
-      setSearch(data.meals);
+      setSearch(data.meals || []);
+
+      setInput("");
     } catch (error) {
       console.log(error);
     }
   }
 
+  useEffect(() => console.log(search), [search]);
+
   return (
-    <div className="flex justify-center flex-col items-center h-screen">
-      <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} />
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 2,
+        mx: 5,
+        my: 2,
+      }}
+    >
+      <SearchBar
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        searchTerm={input}
+      />
       <Box
         sx={{
-          backgroundColor: "pink",
-          mt: 2,
           display: "flex",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          gap: 2,
         }}
       >
-        <List>
-          {search.map((item, index) => (
-            <ListItem key={index}>{item.strMeal}</ListItem>
-          ))}
-        </List>
+        {search.map((item, index) => (
+          <RecipeCard key={index} meal={item} />
+        ))}
       </Box>
-    </div>
+    </Box>
   );
 }
