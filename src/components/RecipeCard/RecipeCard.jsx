@@ -5,11 +5,18 @@ import {
   CardContent,
   CardActions,
   Typography,
-  Box,
+  CardActionArea,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useNavigate } from "react-router-dom";
 
 export default function RecipeCard({ meal }) {
+  const navigate = useNavigate();
+  function handleNavigate() {
+    navigate(`/recipe-details/${meal.idMeal}/${meal.strMeal}`, {
+      state: { meal },
+    });
+  }
   return (
     <Card
       sx={{
@@ -32,7 +39,7 @@ export default function RecipeCard({ meal }) {
           variant="body1"
           sx={{ fontSize: 14, fontWeight: 500, color: "#6e6e6eff" }}
         >
-          {meal.strArea} Cusine
+          {meal.strArea}
         </Typography>
         <Typography variant="body1" sx={{ fontSize: 14 }}>
           {meal.strCategory}
@@ -42,6 +49,7 @@ export default function RecipeCard({ meal }) {
         <Button
           type="button"
           variant="contained"
+          onClick={handleNavigate}
           sx={{
             backgroundColor: "#f5602a",
             color: "white",
