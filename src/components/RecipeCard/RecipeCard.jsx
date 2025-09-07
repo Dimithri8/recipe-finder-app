@@ -5,12 +5,13 @@ import {
   CardContent,
   CardActions,
   Typography,
-  CardActionArea,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export default function RecipeCard({ meal }) {
+export default function RecipeCard({ meal, handleSave }) {
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
   function handleNavigate() {
     navigate(`/recipe-details/${meal.idMeal}/${meal.strMeal}`, {
@@ -64,14 +65,19 @@ export default function RecipeCard({ meal }) {
           type="button"
           variant="outlined"
           sx={{
-            color: "#f5602a",
-            borderColor: "#f5602a",
-            "&:hover": {
-              backgroundColor: "none",
-            },
+            color: isSaved ? "white" : "#f5602a",
+            borderColor: isSaved ? "none" : "#f5602a",
+            backgroundColor: isSaved ? "#f5602a" : "white",
+            // "&:hover": {
+            //   backgroundColor: isSaved ? "#f5602a" : "white",
+            // },
+          }}
+          onClick={() => {
+            handleSave(meal);
+            setIsSaved(true);
           }}
         >
-          Save
+          {isSaved ? "Saved" : "Save"}
         </Button>
       </CardActions>
     </Card>
